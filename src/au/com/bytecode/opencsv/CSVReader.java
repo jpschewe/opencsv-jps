@@ -40,6 +40,16 @@ public class CSVReader implements Closeable, Iterable<String[]> {
     int skipLines;
 
     private boolean linesSkiped;
+    
+    private int lineNumber = -1;
+    
+    /**
+     *
+     * @return the line number of the most recently read line (zero index)
+     */
+    public int getLineNumber() {
+      return lineNumber;
+    }
 
     /**
      * The default line to start reading.
@@ -235,10 +245,12 @@ public class CSVReader implements Closeable, Iterable<String[]> {
         if (!this.linesSkiped) {
             for (int i = 0; i < skipLines; i++) {
                 br.readLine();
+                ++lineNumber;
             }
             this.linesSkiped = true;
         }
         String nextLine = br.readLine();
+        ++lineNumber;
         if (nextLine == null) {
             hasNext = false;
         }

@@ -41,6 +41,16 @@ public class CSVWriter implements Closeable, Flushable {
     private char escapechar;
 
     private String lineEnd;
+    
+    private int lineNumber = -1;
+    
+    /**
+     * 
+     * @return the line number of the most recently written line (zero index)
+     */
+    public int getLineNumber() {
+      return lineNumber;
+    }
 
     /**
      * The character used for escaping quotes.
@@ -260,6 +270,7 @@ public class CSVWriter implements Closeable, Flushable {
 
         sb.append(lineEnd);
         pw.write(sb.toString());
+        ++lineNumber;
     }
 
     /**
